@@ -28,8 +28,9 @@ class Sort:
         return end - start
 
     def shellSortSedgwick(self, data):
-        start = time.time()
+
         sedgewick_reversed = sedgewick(len(data))[::-1]
+        start = time.time()
         for k in sedgewick_reversed:
             data = shell(data, k)
         end = time.time()
@@ -49,6 +50,12 @@ class Sort:
     def quickSort(self, data):
         start = time.time()
         quick(data, 0, len(data) - 1)
+        end = time.time()
+        return end - start
+
+    def quickSortRandom(self, data):
+        start = time.time()
+        quick(data, 0, len(data) - 1, True)
         end = time.time()
         return end - start
 

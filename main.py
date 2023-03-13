@@ -16,11 +16,11 @@ sys.setrecursionlimit(99999999)
 # data = dataAscendingDescendingOrder(500)
 # print(quickSort(data, 0, len(data) - 1)) # moge dopisac False obok
 
-# podzial na klasy, czas, generowanie wszystkiego po wszystkim
-
 def compare(sorting):
     generator = Data()
+    # nums = list(range(200, 10001, 50))
     nums = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
+
     data_names = ["rosnący", "malejący", "V-kształtny", "losowy", "stały"]
     results = []
     for i in nums:
@@ -47,10 +47,4 @@ def compare(sorting):
 
 data_gen = Data()
 sort = Sort()
-compare(sort.selectionSort)
-# data = data_gen.dataInAscendingOrder(2500)
-# sort.quickSort(data)
-# print(data)
-
-# time = sort.insertionSort(data_gen.dataConstant(10000))
-# print(time)
+compare(sort.shellSortSedgwick)

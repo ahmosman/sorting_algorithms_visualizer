@@ -3,13 +3,13 @@ import sys
 
 sys.setrecursionlimit(99999999)
 
-def quick(array, start, end, randomPivot=False):
+def quick(array, start, end, random_pivot=False):
     if start >= end:
         return
 
-    p = partition(array, start, end, randomPivot)
-    quick(array, start, p - 1, randomPivot)
-    quick(array, p + 1, end, randomPivot)
+    p = partition(array, start, end, random_pivot)
+    quick(array, start, p - 1, random_pivot)
+    quick(array, p + 1, end, random_pivot)
 
 
 def calcSedgewick(n):
