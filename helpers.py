@@ -53,7 +53,7 @@ def heapify(data, N, i):
 
 
 def partition(data, start, end, random_pivot=False):
-    pivot = data[random.randint(start, start)] if random_pivot else data[start]
+    pivot = data[random.randint(start, end)] if random_pivot else data[start]
     low = start + 1
     high = end
 

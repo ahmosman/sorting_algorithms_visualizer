@@ -47,4 +47,4 @@ def compare(sorting):
 
 data_gen = Data()
 sort = Sort()
-compare(sort.shellSortSedgwick)
+compare(sort.quickSort)
