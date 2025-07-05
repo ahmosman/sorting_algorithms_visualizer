@@ -1,6 +1,5 @@
-
 import sys
-
+import os
 import matplotlib.pyplot as plt
 
 from Data import Data
@@ -8,43 +7,48 @@ from Sort import Sort
 
 sys.setrecursionlimit(99999999)
 
-# print(shell_sort([4,14,7,2,1,10,3,8,11,5,12],5))
-
-
-# data = data_gen.dataConstant(100000)
-# print(sort.insertionSort(data))
-# data = dataAscendingDescendingOrder(500)
-# print(quickSort(data, 0, len(data) - 1)) # moge dopisac False obok
-
-def compare(sorting):
+def compare_all(sort_obj):
     generator = Data()
-    # nums = list(range(200, 10001, 50))
-    nums = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
+    nums = [1000, 2000, 3000, 4000]
+    data_names = ["Ascending", "Descending", "V-shaped", "Random", "Constant"]
 
-    data_names = ["rosnący", "malejący", "V-kształtny", "losowy", "stały"]
-    results = []
-    for i in nums:
-        times = []
-        time = sorting(generator.dataInAscendingOrder(i))
-        times.append(time)
-        time = sorting(generator.dataInDescendingOrder(i))
-        times.append(time)
-        time = sorting(generator.dataAscendingDescendingOrder(i))
-        times.append(time)
-        time = sorting(generator.dataRandomOrder(i))
-        times.append(time)
-        time = sorting(generator.dataConstant(i))
-        times.append(time)
-        results.append(times)
+    sorting_algorithms = [
+        ("Insertion Sort", sort_obj.insertionSort),
+        ("Selection Sort", sort_obj.selectionSort),
+        ("Shell Sort (Sedgewick)", sort_obj.shellSortSedgwick),
+        ("Heap Sort", sort_obj.heapSort),
+        ("Quick Sort", sort_obj.quickSort),
+        ("Quick Sort (Random Pivot)", sort_obj.quickSortRandom),
+    ]
 
-    plt.xlabel('Liczba elementów')
-    plt.ylabel('Czas (s)')
-    plt.title(sorting.__name__)
-    plt.plot(nums, results)
-    plt.legend(data_names)
-    plt.show()
+    # Create directory for plots if it doesn't exist
+    plots_dir = "plots_png"
+    os.makedirs(plots_dir, exist_ok=True)
 
+    for sort_name, sorting in sorting_algorithms:
+        results = []
+        for n in nums:
+            times = []
+            times.append(sorting(generator.dataInAscendingOrder(n)))
+            times.append(sorting(generator.dataInDescendingOrder(n)))
+            times.append(sorting(generator.dataAscendingDescendingOrder(n)))
+            times.append(sorting(generator.dataRandomOrder(n)))
+            times.append(sorting(generator.dataConstant(n)))
+            results.append(times)
 
-data_gen = Data()
-sort = Sort()
-compare(sort.quickSort)
+        results = list(map(list, zip(*results)))  # Transpose for plotting
+
+        plt.figure()
+        plt.xlabel('Number of elements')
+        plt.ylabel('Time (s)')
+        plt.title(sort_name)
+        for i, name in enumerate(data_names):
+            plt.plot(nums, results[i], label=name)
+        plt.legend()
+        plt.tight_layout()
+        plt.savefig(os.path.join(plots_dir, f"{sort_name.replace(' ', '_').replace('(', '').replace(')', '').replace('-', '').lower()}.png"))
+        plt.close()
+
+if __name__ == "__main__":
+    sort = Sort()
+    compare_all(sort)

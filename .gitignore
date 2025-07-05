@@ -1,1 +1,5 @@
-/venv/
+.venv
+.idea
+.vscode
+__pycache__
+plots_png
